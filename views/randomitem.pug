@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to the random item page.
+
+  // Add this code to generate random images
+  -
+    const image_names = [
+      'image1.webp',
+      'image2.jpg',
+      'image3.jpg',
+      'image4.jpg',
+      'image5.jpg'
+    ]
+    const numImages = 3;
+    const displayedImages = [];
+
+    for (let i = 0; i < numImages; i++) {
+      const randomIndex = Math.floor(Math.random() * image_names.length);
+      const randomImage = image_names[randomIndex];
+      displayedImages.push(randomImage);
+    }
+
+  // Loop through the random images
+  each image in displayedImages
+    img(src=`/images/${image}`, alt=image, height="300", width="300")
