@@ -1,3 +1,4 @@
+const cars = require('../models/cars');
 var Car = require('../models/cars');
 exports.cars_list = function (req, res) {
     res.send('NOT IMPLEMENTED: Cars list');
@@ -19,145 +20,47 @@ exports.cars_update_put = function (req, res) {
     res.send('NOT IMPLEMENTED: Cars update PUT' + req.params.id);
 };
 
-exports.cars_list = async function (req, res) {
-    try {
-        theCars = await Car.find();
-        res.send(theCars);
-    }
-    catch (err) {
-        res.status(500);
-        res.send(`{"error": ${err}}`);
-    }
+//List of all Costumes
+exports.cars_list = async function(req, res) {
+try{
+theCars = await cars.find();
+res.send(theCars);
+}
+catch(err){
+res.status(500);
+res.send(`{"error": ${err}}`);
+}
 };
-
-
-exports.cars_view_all_Page = async function (req, res) {
-    try {
-        theCars = await Car.find();
-        res.render('cars', { title: 'Cars Search Results', results: theCars });
-    }
-    catch (err) {
-        res.status(500);
-        res.send(`{"error": ${err}}`);
-    }
-};
-
-
-exports.cars_create_post = async function (req, res) {
-    console.log(req.body)
-    let document = new Car();
-
-    document.cars_make = req.body.cars_make;
-    document.cars_model = req.body.cars_model;
-    document.cars_year = req.body.cars_year;
-    try {
-        let result = await document.save();
-        res.send(result);
-    }
-    catch (err) {
-        res.status(500);
-        res.send(`{"error": ${err}}`);
-    }
-};
-
-
-exports.cars_detail = async function (req, res) {
-    console.log("detail" + req.params.id)
-    try {
-        result = await Car.findById(req.params.id)
-        res.send(result)
-    } catch (error) {
-        res.status(500)
-        res.send(`{"error": document for id ${req.params.id} not found`);
-    }
-};
-
-
-exports.cars_update_put = async function (req, res) {
-    //console.log(`Update on id ${req.params.id} with body ${JSON.stringify(req.body)}`);
-
-    try {
-        let toUpdate = await Car.findById(req.params.id);
-
-        // Update properties if they are defined in the request body
-        if (req.body.cars_make) toUpdate.cars_make = req.body.cars_make;
-        if (req.body.cars_model) toUpdate.cars_model = req.body.cars_model;
-        if (req.body.cars_year) toUpdate.cars_year = req.body.cars_year;
-        if (req.body.checkboxsale) toUpdate.sale = true; // Convert checkbox value to boolean
-
-        let result = await toUpdate.save();
-        console.log("Success " + result);
-        res.send(result);
-    } catch (err) {
-        res.status(500).send(`{"error": "${err}": Update for id ${req.params.id} failed`);
-    }
-};
-
-
-exports.cars_delete = async function(req, res) {
-    console.log("delete " + req.params.id)
-    try {
-    result = await Car.findByIdAndDelete( req.params.id)
-    console.log("Removed " + result)
-    res.send(result)
-    } catch (err) {
-    res.status(500)
-    res.send(`{"error": Error deleting ${err}}`);
-    }
-   };
-   
-
-
-exports.cars_view_one_Page = async function(req, res) {
-    console.log("single view for id " + req.query.id)
+// VIEWS
+// Handle a show all view
+exports.cars_view_all_Page = async function(req, res) {
     try{
-    result = await Car.findById( req.query.id)
-    res.render('carsdetail', 
-   { title: 'Cars Detail', toShow: result });
+    theCars = await cars.find();
+    res.render('cars', { title: 'Car Search Results', results: theCars });
     }
     catch(err){
-    res.status(500)
-    res.send(`{'error': '${err}'}`);
+    res.status(500);
+    res.send(`{"error": ${err}}`);
     }
-   };
+};
 
-   
-exports.cars_create_Page = function(req, res) {
-    console.log("create view")
-    try{
-    res.render('carscreate', { title: 'Cars Create'});
-    }
-    catch(err){
-    res.status(500)
-    res.send(`{'error': '${err}'}`);
-    }
-   };
-
-  
-exports.cars_update_Page = async function(req, res) {
-    //console.log("update view for item "+req.query.id)
-    try{
-    let result = await Car.findById(req.query.id)
-    console.log(result);
-    res.render('carsupdate', { title: 'Cars Update', toShow: result });
-    }
-    catch(err){
-    res.status(500)
-    res.send(`{'error': '${err}'}`);
-    }
-   };
-
-   
-exports.cars_delete_Page = async function(req, res) {
-    console.log("Delete view for id " + req.query.id)
-    try{
-    result = await Car.findById(req.query.id)
-    res.render('carsdelete', { title: 'Cars Delete', toShow: 
-   result });
-    }
-    catch(err){
-    res.status(500)
-    res.send(`{'error': '${err}'}`);
-    }
-   };
-   
+// Handle Car create on POST.
+exports.car_create_post = async function(req, res) {
+console.log(req.body)
+let document = new Car();
+// We are looking for a body, since POST does not have query parameters.
+// Even though bodies can be in many different formats, we will be picky
+// and require that it be a json object
+// {"costume_type":"goat", "cost":12, "size":"large"}
+document.cars_make = req.body.cars_make;
+document.cars_model = req.body.cars_model;
+document.cars_year = req.body.cars_year;
+try{
+let result = await document.save();
+res.send(result);
+}
+catch(err){
+res.status(500);
+res.send(`{"error": ${err}}`);
+}
+};

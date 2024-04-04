@@ -2,24 +2,14 @@ extends layout
 
 block content
   h1= title
-  .container-fluid
-    .row
-      -
-      for car in cars
-        .col-sm-2
-          h3= `Make: ${car.make}`
-          p= `Model: ${car.model}`
-          p= `Year: ${car.year}`
-  br
-  h5= 'Buy'
-
+  - let items = results;
   div(class="container-fluid")
-    each car, index in cars
-      div(class="row", onclick=`buy(${index})`)
-        div(class="col-sm-2") 
-          br
-          | car #{index}: #{car.make} Model: #{car.model} Year: #{car.year}
+    div(class="row")
+      each item, index in items  
+        div(class="col-sm-2",onclick=`buy(${index})`)
+          p #{item.cars_make} 
+          p #{item.cars_model}
+          p #{item.cars_year} 
   script.
-    function buy(price){
-      alert('You purchased item ' + price);
-    }
+    function buy(index) {
+    alert("You purchased item " + index);}   
