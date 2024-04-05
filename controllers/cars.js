@@ -64,3 +64,36 @@ res.status(500);
 res.send(`{"error": ${err}}`);
 }
 };
+// for a specific Car.
+exports.cars_detail = async function(req, res) {
+console.log("detail" + req.params.id)
+try {
+result = await Car.findById( req.params.id)
+res.send(result)
+} catch (error) {
+res.status(500)
+res.send(`{"error": document for id ${req.params.id} not found`);
+}
+};
+// Handle Costume update form on PUT.
+exports.cars_update_put = async function(req, res) {
+console.log(`update on id ${req.params.id} with body
+${JSON.stringify(req.body)}`)
+try {
+let toUpdate = await Car.findById( req.params.id)
+// Do updates of properties
+if(req.body.car_type)
+toUpdate.car_type = req.body.car_type;
+if(req.body.cars_make) toUpdate.cars_make = req.body.cars_make;
+if(req.body.cars_model) toUpdate.cars_model = req.body.cars_model;
+if(req.body.cars_year) toUpdate.cars_year = req.body.cars_year;
+let result = await toUpdate.save();
+console.log("Sucess " + result)
+res.send(result)
+} catch (err) {
+res.status(500)
+res.send(`{"error": ${err}: Update for id ${req.params.id}
+failed`);
+}
+};
+
