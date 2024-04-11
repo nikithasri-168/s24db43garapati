@@ -7,8 +7,25 @@ a {
   color: #00B7FF;
 }
 
-.carAttr {
+.carsAttr {
   background-color: aquamarine;
-  width: 120px;
+  width: fit-content;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  border: blue solid 2px;
+  margin-right: 10px;
+}
+  #cars_make{
+    background-color: #e3e3f6;
   }
-  
+  #cars_model{
+    background-color: #e3e3f6;
+  }
+  #cars_year{
+    background-color: #e3e3f6;
+  }
+.myclass{
+  background-color: beige;
+  width: fit-content;
+  border: red solid 1px;
+}

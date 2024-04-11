@@ -1,0 +1,53 @@
+extends layout
+
+block content
+  h1= title
+
+  - if (toShow == null)
+    h2 No instance to update 
+  - else
+    - let carsid = toShow._id
+    - let cars_make = toShow.cars_make
+    - let cars_model = toShow.cars_model
+    - let cars_year = toShow.cars_year
+
+    .row.row(class='mb-2 myclass3')  
+      div.mr-1 Id is 
+        div #{carsid}
+    - let actionid = "/resource/cars/" + carsid
+    form(id='CarsForm', action=actionid, method="PUT")
+      div.form-group
+        label.carsAttr(for='cars_make') Cars make
+        input#cars_make(type='text', name='cars_make', value=cars_make)
+      div.form-group
+        label.carsAttr(for='cars_model') Cars model
+        input#cars_model(type='text', name='cars_model', value=cars_model)
+      div.form-group
+        label.carsAttr(for='cars_year') Cars year
+        input#cars_year(type='number', name='cars_year', value=cars_year)
+      input(type="submit")
+
+
+  script.
+      document.forms['CarsForm'].addEventListener('submit', (event) => {
+        event.preventDefault();
+        // TODO do something here to show user that form is being submitted
+        fetch(event.target.action, {
+          method: 'PUT',
+          body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+        }).then((resp) => {
+          if(resp.ok){
+              alert ("Cars Data Updated Successfully")
+              document.getElementById('CarsForm').reset()
+          }
+          else {
+              alert ("Failed to Update Cars Data")
+          }
+        }).then((body) => {
+          console.log(body)
+          // TODO handle body
+        }).catch((error) => {
+          // TODO handle error
+          alert("Update failed " + error )
+        });
+      });

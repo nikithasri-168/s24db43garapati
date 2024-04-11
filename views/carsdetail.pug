@@ -1,0 +1,23 @@
+extends layout
+block content
+  h1= title
+  if (toShow == null)
+    h2 No instance to detail
+  else 
+    - let carsid = toShow._id
+    - let cars_make = toShow.cars_make
+    - let cars_model = toShow.cars_model
+    - let cars_year = toShow.cars_year
+    div
+        div.row
+        div(class='carsAttr mr-3') cars ID is:
+        div(class='myclass') #{carsid}
+        div.row
+        div(class='carsAttr mr-3') cars make:
+        div(class='myclass') #{cars_make}
+        div.row
+        div(class='carsAttr mr-3') cars model:
+        div(class='myclass') #{cars_model}
+        div.row
+        div(class='carsAttr mr-3') cars year:
+        div(class='myclass') #{cars_year}

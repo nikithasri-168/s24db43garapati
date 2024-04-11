@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  div.container-fluid
+    div.row
+      div.col-md-6.offset-md-3.text-center
+        h1.mb-3= title
+        form#CarsForm.mb-3(action="/resource/cars", method="POST", style="border: 2px solid #3498db; padding: 20px; border-radius: 10px;")
+          div.form-group.row.mb-3
+            label.carsAttr.col-sm-3(for='cars_make') Cars make
+            div.col-sm-9
+              input#cars_make(type='text', name='cars_make', class='form-control')
+          div.form-group.row.mb-3
+            label.carsAttr.col-sm-3(for='cars_model') Cars model
+            div.col-sm-9
+              input#cars_model(type='text', name='cars_model', class='form-control')
+          div.form-group.row.mb-3
+            label.carsAttr.col-sm-3(for='cars_year') Cars year
+            div.col-sm-9
+              input#cars_year(type='number', name='cars_year', class='form-control')
+          input(type="submit", class="btn btn-primary")
+        script.
+          document.forms['CarsForm'].addEventListener('submit', (event) => {
+            event.preventDefault();
+            // TODO do something here to show the user that the form is being submitted
+            fetch(event.target.action, {
+              method: 'POST',
+              body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+            }).then((resp) => {
+              return resp.json(); // or resp.text() or whatever the server sends
+            }).then((body) => {
+              alert("Save succeeded");
+              // TODO handle body
+            }).catch((error) => {
+              // TODO handle error
+              alert("Save failed " + error);
+            });
+          });

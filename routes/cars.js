@@ -1,18 +1,33 @@
 var express = require('express');
-const car_controllers= require('../controllers/cars');
+const passport = require('passport');
+const cars_controllers = require('../controllers/cars');
 var router = express.Router();
 
-// GET request for all cars
-router.get('/', car_controllers.cars_view_all_Page );
+router.get('/', cars_controllers.cars_view_all_Page);
 
-// GET request for one car
-router.get('/:id', car_controllers.cars_detail);
+router.get('/cars/:id', cars_controllers.cars_detail);
 
-// PUT request for updating a specific car
-router.put('/cars/:id', car_controllers.cars_update_put);
 
-/* GET detail car page */
-router.get('/detail', car_controllers.cars_view_one_Page);
 
+const secured = (req, res, next) => {
+    if (req.user) {
+        return next();
+    }
+    res.redirect("/login");
+}
+
+// router.get('/update', secured, cars_controllers.cars_update_Page);
+
+router.post('/login', passport.authenticate('local'), function (req, res) {
+    res.redirect('/');
+});
+
+router.get('/detail', secured, cars_controllers.cars_view_one_Page);
+
+router.get('/create', secured, cars_controllers.cars_create_Page);
+
+router.get('/update', secured, cars_controllers.cars_update_Page);
+
+router.get('/delete', secured, cars_controllers.cars_delete_Page);
 
 module.exports = router;
