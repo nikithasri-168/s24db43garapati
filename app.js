@@ -82,15 +82,11 @@ async function recreateDB() {
 if (reseed) { recreateDB();
 }
 
-
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const carsRouter = require('./routes/cars');
 const gridRouter = require('./routes/grid');
 const resourceRouter = require('./routes/resource');
-
-
 
 var app = express();
 
@@ -112,12 +108,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
-
 app.use('/cars', carsRouter);
-
 app.use('/grid', gridRouter);
-
 app.use('/resource', resourceRouter);
 
 // passport config
@@ -127,10 +119,6 @@ var Account =require('./models/account');
 passport.use(new LocalStrategy(Account.authenticate()));
 passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
-
-
-
-
 
 app.get('/choose', function (req, res) {
   res.render('choose', { title: 'Choose' });
