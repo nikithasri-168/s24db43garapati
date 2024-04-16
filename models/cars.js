@@ -5,14 +5,14 @@ const carSchema = new mongoose.Schema({
   cars_make: {
     type: String,
     required: true,
-    minLength: 4,
-    maxLength: 10
+    minLength: 6,
+    maxLength: 13
 },
   cars_model: {
     type: String,
     required: true,
     minlength: 0,
-    maxlength: 7
+    maxlength: 9
 },
   cars_year: {
         type: Number,

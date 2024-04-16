@@ -6,19 +6,15 @@ block content
   div(class="container-fluid")
     div(class="row m-1")
       // Create button at the top
-      //- div(class="row-sm-2 m-1")
-      //-   button.btn.btn-primary(onclick="dispatch('/cars/create')") Create New Car
 
       each item in results
         - let destination1 = `dispatch(\"/cars/update?id=${item._id}\")`
-        //- - let destination2 = `dispatch(\"/cars/create\")`
         - let destination3 = `dispatch(\"/cars/detail?id=${item._id}\")`
         - let destination4 = `dispatch(\"/cars/delete?id=${item._id}\")`
         div(class="row-sm-2 m-1") Cars Make:#{item.cars_make}, cars model:#{item.cars_model}, cars year:#{item.cars_year}
-          //- button.btn.btn-primary.ml-1(onclick=destination2) Create 
           button.btn.btn-secondary.ml-1(onclick=destination1  style="margin-left: 20px") Update 
-          //- button.btn.btn-primary.ml-1(onclick=destination3) Detail
-          //- button.btn.btn-primary.ml-1(onclick=destination4) Delete
+          button.btn.btn-secondary.ml-1(onclick=destination3 style="margin-left: 20px") Detail
+          button.btn.btn-secondary.ml-1(onclick=destination4 style="margin-left: 20px") Delete
 
   script. 
     function dispatch(path){ 

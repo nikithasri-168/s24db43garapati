@@ -1,14 +1,15 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to Nikitha web application page working on pug within this lab #{title}
-
-  button(type="button", class="btn btn-secondary" onclick="double()") button 
-  p
-  div#double Up the amount
-  p
-  a(href='/cars') View Cars
+  if (!user)
+    a(href="/login") Login
+    br
+    a(href="/register") Register
+  if (user)
+    p You are currently logged in as #{user.username}
+    a(href="/cars") Take me to cars
+    br
+    a(href="/logout") Logout
 
   script.
     console.log("running on http://localhost:3000/")
@@ -20,10 +21,5 @@ block content
     function double() {
         value += 1;
         power *= 2;
-        document.getElementById('double').textContent = `Two to the power ${value} is ${powerg}`;
+        document.getElementById('double').textContent = `Two to the power ${value} is ${power}`;
     }
-
-    
-  
-
- 
